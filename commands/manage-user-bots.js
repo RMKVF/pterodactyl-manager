@@ -61,7 +61,7 @@ module.exports = {
             .setTimestamp();
 
         serverStatus.forEach(server => {
-            const statusText = server.status === 'running' ? '<:31102on:1264712563653083188>' : '<:16429off:1264712576554504234>';
+            const statusText = server.status === 'running' ? ':green_square:' : ':red_square:';
             const uptimeText = server.status === 'running' ? `Online for ${ms(server.uptime)}` : 'Offline';
             embed.addFields({ name: server.name, value: `Status: ${statusText}\n${uptimeText}`, inline: true });
         });
@@ -109,7 +109,7 @@ module.exports = {
 
             const serverControlEmbed = new EmbedBuilder()
                 .setTitle(`Manage ${selectedServer.name}`)
-                .addFields({ name: 'Current Status', value: selectedServer.status === 'running' ? '<:31102on:1264712563653083188>' : '<:16429off:1264712576554504234>', inline: true })
+                .addFields({ name: 'Current Status', value: selectedServer.status === 'running' ? ':green_square:' : ':red_square:', inline: true })
                 .addFields({ name: 'Online for', value: selectedServer.status === 'running' ? ms(selectedServer.uptime) : 'Offline', inline: true })
                 .setTimestamp();
 
