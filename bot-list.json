@@ -1,0 +1,12 @@
+[
+  {
+    "name": "name of the server",
+    "server_id": "id of the server in pterodactyl",
+    "owner_id": "discord ID of the owner of the server"
+  },
+  {
+    "name": "name of the server",
+    "server_id": "id of the server in pterodactyl",
+    "owner_id": "discord ID of the owner of the server"
+  }
+]
