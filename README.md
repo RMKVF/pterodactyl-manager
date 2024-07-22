@@ -76,12 +76,23 @@ Pterodactyl Manager is a Discord bot designed to manage Pterodactyl servers. The
     ]
     ```
 
+5. Start the bot:
+
+    ```bash
+    node index.js
+    ```
+
 ## Commands
 
 ### `/manage-user-servers`
 
 - **Description**: Manage servers of a user by their Discord ID.
 - **Usage**: `/manage-user-servers user_id:<Discord ID>`
+
+### `/manage-server`
+
+- **Description**: Manage your Pterodactyl servers.
+- **Usage**: `/manage-server`
 
 ### Additional Commands
 
