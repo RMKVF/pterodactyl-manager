@@ -65,39 +65,36 @@ Le bot vous permet de démarrer, arrêter, redémarrer des serveurs, consulter l
       "admins": ["xxxxx", "xxxxx"],
       "dev": ["xxxxx"]
     }
-
     ```
 
 4. Configurez le fichier `bot-list.json` avec vos serveurs :
 
     ```json
-  [
-    {
-      "name": "xxxxx",
-      "id": "xxxxx",
-      "owner_ids": ["xxxxx", "xxxxx"],
-      "staff_access": "personal"
-    },
-    {
-      "name": "xxxxx",
-      "id": "xxxxx",
-      "owner_ids": ["xxxxx", "xxxxx"],
-      "staff_access": "dev"
-    },
-    {
-      "name": "xxxxx",
-      "id": "xxxxx",
-      "owner_ids": ["xxxxx", "xxxxx"],
-      "staff_access": "admins"
-    },
-    {
-      "name": "xxxxx",
-      "id": "xxxxx",
-      "owner_ids": ["xxxxx", "xxxxx"],
-      "staff_access": "staff"
-    }
-  ]
-  ```
+      {
+        "name": "xxxxx",
+        "id": "xxxxx",
+        "owner_ids": ["xxxxx", "xxxxx"],
+        "staff_access": "personal"
+      },
+      {
+        "name": "xxxxx",
+        "id": "xxxxx",
+        "owner_ids": ["xxxxx", "xxxxx"],
+        "staff_access": "dev"
+      },
+      {
+        "name": "xxxxx",
+        "id": "xxxxx",
+        "owner_ids": ["xxxxx", "xxxxx"],
+        "staff_access": "admins"
+      },
+      {
+        "name": "xxxxx",
+        "id": "xxxxx",
+        "owner_ids": ["xxxxx", "xxxxx"],
+        "staff_access": "staff"
+      }
+    ```
 
 5. Démarrez le bot :
 
