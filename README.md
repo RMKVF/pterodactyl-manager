@@ -97,7 +97,7 @@ Le bot vous permet de démarrer, arrêter, redémarrer des serveurs, consulter l
       "staff_access": "staff"
     }
   ]
-    ```
+  ```
 
 5. Démarrez le bot :
 
