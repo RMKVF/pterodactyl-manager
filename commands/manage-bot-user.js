@@ -1,25 +1,55 @@
-const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, ApplicationCommandType } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, ApplicationCommandOptionType } = require('discord.js');
 const axios = require('axios');
 const ms = require('ms');
 const botList = require('../bot-list.json');
 const config = require('../config.json');
 
 module.exports = {
-    name: 'manage-bots', // <- Important pour le chargement dynamique
-    description: 'Gérer les bots/serveurs que vous possédez',
-    options: [],
+    name: 'manage-user-bots',
+    description: 'Gérer les bots d\'un utilisateur via son ID',
+    options: [
+        {
+            name: 'user_id',
+            description: 'ID de l\'utilisateur dont tu souhaites gérer les serveurs',
+            type: ApplicationCommandOptionType.String,
+            required: true
+        }
+    ],
 
     run: async (interaction) => {
         await interaction.deferReply({ ephemeral: true });
 
         const userId = interaction.user.id;
-        const userServers = botList.filter(bot => bot.owner_ids.includes(userId));
+        const targetUserId = interaction.options.getString('user_id');
 
-        if (userServers.length === 0) {
-            return interaction.editReply({ content: '🚫 Vous ne possédez aucun serveur enregistré.', ephemeral: true });
+        // Vérifier que l'utilisateur est bien staff/admin/dev
+        if (![...config.staff, ...config.admins, ...config.dev].includes(userId)) {
+            return interaction.editReply({ content: '🚫 Tu n\'as pas la permission d\'utiliser cette commande.', ephemeral: true });
         }
 
-        const serverStatus = await Promise.all(userServers.map(async bot => {
+        // Vérifier les serveurs de l'utilisateur ciblé
+        const userServers = botList.filter(bot => bot.owner_ids.includes(targetUserId));
+
+        if (userServers.length === 0) {
+            return interaction.editReply({ content: 'Cet utilisateur n\'a aucun serveur.', ephemeral: true });
+        }
+
+        // Filtrer les serveurs selon le niveau de staff de celui qui exécute la commande
+        const role = config.dev.includes(userId) ? 'dev' : config.admins.includes(userId) ? 'admins' : 'staff';
+
+        const accessibleServers = userServers.filter(server => {
+            if (server.staff_access === 'personal') return false; // Pas accessible
+            if (server.staff_access === 'staff') return ['staff', 'admins', 'dev'].includes(role);
+            if (server.staff_access === 'admins') return ['admins', 'dev'].includes(role);
+            if (server.staff_access === 'dev') return ['dev'].includes(role);
+            return false;
+        });
+
+        if (accessibleServers.length === 0) {
+            return interaction.editReply({ content: '🚫 Aucun serveur accessible pour toi sur cet utilisateur.', ephemeral: true });
+        }
+
+        const serverStatus = await Promise.all(accessibleServers.map(async bot => {
             try {
                 const res = await axios.get(`${config.pterodactyl.url}/api/client/servers/${bot.id}/resources`, {
                     headers: {
@@ -45,8 +75,8 @@ module.exports = {
         }));
 
         const embed = new EmbedBuilder()
-            .setTitle(`🔧 Gestion de vos serveurs`)
-            .setDescription(`Sélectionnez un serveur à gérer ci-dessous.`)
+            .setTitle(`🔧 Gestion des serveurs de l'utilisateur ${targetUserId}`)
+            .setDescription(`Sélectionne un serveur à gérer`)
             .setColor(0x2f3136)
             .setTimestamp();
 
@@ -58,8 +88,8 @@ module.exports = {
 
         const selectMenu = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
-                .setCustomId('select_server')
-                .setPlaceholder('Choisissez un serveur')
+                .setCustomId('select_server_user')
+                .setPlaceholder('Choisis un serveur')
                 .addOptions(menuOptions)
         );
 
@@ -68,7 +98,7 @@ module.exports = {
         const menuCollector = interaction.channel.createMessageComponentCollector({ filter: i => i.user.id === userId, time: 60000 });
 
         menuCollector.on('collect', async i => {
-            if (i.customId === 'select_server') {
+            if (i.customId === 'select_server_user') {
                 const selectedId = i.values[0];
                 const server = serverStatus.find(s => s.id === selectedId);
 

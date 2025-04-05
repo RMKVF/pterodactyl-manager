@@ -1,21 +1,22 @@
 {
-  "prefix": "!",
-  "token": "your-discord-bot-token",
-  "owner": "owner-id-of-bot",
-  "staff": ["user-id-of-person-can-use-manage-user-bot", "id2"],
+  "token": "xxxxx",
+  "channelId": "xxxxx",
   "pterodactyl": {
-    "api_key": "your-api-key-of-pterodactyl",
-    "api_url": "https://example.com"
+    "url": "xxxxx",
+    "apiKey": "xxxxx"
   },
+  "refreshInterval": 30000,
   "statuses": [
     {
-      "text": "with servers",
+      "text": "Gestion des serveurs",
       "type": "PLAYING"
     },
     {
-      "text": "look at the bots",
+      "text": "Monitoring actif",
       "type": "WATCHING"
     }
   ],
-  "statusInterval": 10
+  "staff": ["xxxxx", "xxxxx", "xxxxx"],
+  "admins": ["xxxxx", "xxxxx"],
+  "dev": ["xxxxx"]
 }

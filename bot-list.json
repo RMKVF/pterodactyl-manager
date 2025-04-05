@@ -1,12 +1,26 @@
 [
   {
-    "name": "name of the server",
-    "server_id": "id of the server in pterodactyl",
-    "owner_id": "discord ID of the owner of the server"
+    "name": "xxxxx",
+    "id": "xxxxx",
+    "owner_ids": ["xxxxx", "xxxxx"],
+    "staff_access": "personal"
   },
   {
-    "name": "name of the server",
-    "server_id": "id of the server in pterodactyl",
-    "owner_id": "discord ID of the owner of the server"
+    "name": "xxxxx",
+    "id": "xxxxx",
+    "owner_ids": ["xxxxx", "xxxxx"],
+    "staff_access": "dev"
+  },
+  {
+    "name": "xxxxx",
+    "id": "xxxxx",
+    "owner_ids": ["xxxxx", "xxxxx"],
+    "staff_access": "admins"
+  },
+  {
+    "name": "xxxxx",
+    "id": "xxxxx",
+    "owner_ids": ["xxxxx", "xxxxx"],
+    "staff_access": "staff"
   }
 ]

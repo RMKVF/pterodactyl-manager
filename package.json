@@ -1,8 +1,21 @@
 {
-  "dependencies": {
-    "axios": "^1.7.2",
-    "chalk": "^5.3.0",
-    "discord.js": "^14.15.3",
-    "ms": "^2.1.3"
+    "name": "pterodactyl-manager",
+    "version": "1.0.0",
+    "description": "Bot Discord pour gérer et surveiller les serveurs Pterodactyl",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "axios": "^1.6.7",
+      "chalk": "^4.1.2",
+      "discord.js": "^14.13.0",
+      "ms": "^2.1.3"
+    },
+    "engines": {
+      "node": ">=16.11.0"
+    },
+    "author": "RMKVF",
+    "license": "MIT"
   }
-}
+  
