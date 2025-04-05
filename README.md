@@ -1,111 +1,138 @@
 # Pterodactyl Manager Discord Bot
 
-Pterodactyl Manager is a Discord bot designed to manage Pterodactyl servers. The bot allows users to start, stop, and restart servers, view server statuses, and manage servers associated with specific users.
+Pterodactyl Manager est un bot Discord conçu pour gérer les serveurs Pterodactyl.  
+Le bot vous permet de démarrer, arrêter, redémarrer des serveurs, consulter leur statut, et gérer les serveurs associés à des utilisateurs spécifiques.
 
-## Features
+## Fonctionnalités
 
-- Manage Pterodactyl servers directly from Discord
-- View server status and uptime
-- Control server power states (start, stop, restart)
-- Manage servers for specific users
+- Gérer les serveurs Pterodactyl directement depuis Discord
+- Voir le statut des serveurs et leur uptime
+- Contrôler l’alimentation des serveurs (démarrer, arrêter, redémarrer)
+- Gestion des serveurs pour des utilisateurs spécifiques
+- Gestion des rôles : Staff, Admin, Dev avec accès configurables
+- Notification privée automatique lors des changements de statut serveur
+- Logs détaillés dans la console à chaque vérification
+- Embed Discord mis à jour pour éviter le spam
+- Support multi-propriétaires pour un serveur
+- Limite de 10 serveurs par embed pour respecter les règles Discord
 
-## Setup
+## Installation
 
-### Prerequisites
+### Prérequis
 
-- Node.js (v14 or higher)
+- Node.js (v20 ou supérieur recommandé)
 - npm (Node Package Manager)
-- A Discord bot token
-- Pterodactyl API key and URL
+- Un token de bot Discord
+- Une clé API Pterodactyl et l’URL du panel
 
-### Installation
+### Étapes d’installation
 
-1. Clone the repository:
+1. Clonez le dépôt :
 
     ```bash
-    git clone https://github.com/RMKVF/pterodactyl-manager.git
+    git clone https://github.com/TonGithub/pterodactyl-manager.git
     cd pterodactyl-manager
     ```
 
-2. Install the required dependencies:
+2. Installez les dépendances nécessaires :
 
     ```bash
     npm install
     ```
 
-3. Edit the `config.json` file with your configuration:
+3. Configurez le fichier `config.json` :
 
     ```json
     {
-      "prefix": "!",
-      "token": "your-discord-bot-token",
-      "owner": "owner-id-of-bot",
-      "staff": ["user-id-of-person-can-use-manage-user-bot", "id2"],
+      "token": "xxxxx",
+      "channelId": "xxxxx",
       "pterodactyl": {
-        "api_key": "your-api-key-of-pterodactyl",
-        "api_url": "https://example.com"
-      },
+        "url": "xxxxx",
+        "apiKey": "xxxxx"
+        },
+      "refreshInterval": 30000,
       "statuses": [
         {
-          "text": "with servers",
+          "text": "xxxxx",
           "type": "PLAYING"
         },
         {
-          "text": "look at the bots",
+          "text": "xxxxx",
           "type": "WATCHING"
         }
       ],
-      "statusInterval": 10
+      "staff": ["xxxxx", "xxxxx", "xxxxx"],
+      "admins": ["xxxxx", "xxxxx"],
+      "dev": ["xxxxx"]
     }
+
     ```
 
-4. Edit the `bot-list.json` file with your servers:
+4. Configurez le fichier `bot-list.json` avec vos serveurs :
 
     ```json
-    [
-      {
-        "name": "name of the server",
-        "server_id": "id of the server in pterodactyl",
-        "owner_id": "discord ID of the owner of the server"
-      },
-      {
-        "name": "name of the server",
-        "server_id": "id of the server in pterodactyl",
-        "owner_id": "discord ID of the owner of the server"
-      }
-    ]
+  [
+    {
+      "name": "xxxxx",
+      "id": "xxxxx",
+      "owner_ids": ["xxxxx", "xxxxx"],
+      "staff_access": "personal"
+    },
+    {
+      "name": "xxxxx",
+      "id": "xxxxx",
+      "owner_ids": ["xxxxx", "xxxxx"],
+      "staff_access": "dev"
+    },
+    {
+      "name": "xxxxx",
+      "id": "xxxxx",
+      "owner_ids": ["xxxxx", "xxxxx"],
+      "staff_access": "admins"
+    },
+    {
+      "name": "xxxxx",
+      "id": "xxxxx",
+      "owner_ids": ["xxxxx", "xxxxx"],
+      "staff_access": "staff"
+    }
+  ]
     ```
 
-5. Start the bot:
+5. Démarrez le bot :
 
     ```bash
     node index.js
     ```
 
-## Commands
+## Commandes disponibles
 
-### `/manage-user-servers`
+### `/manage-bots`
 
-- **Description**: Manage servers of a user by their Discord ID.
-- **Usage**: `/manage-user-servers user_id:<Discord ID>`
+- **Description** : Gérer les serveurs dont vous êtes propriétaire (démarrer, arrêter, redémarrer).
+- **Utilisation** : `/manage-bots`
 
-### `/manage-server`
+### `/manage-user-bots`
 
-- **Description**: Manage your Pterodactyl servers.
-- **Usage**: `/manage-server`
+- **Description** : Gérer les serveurs d’un utilisateur spécifique par son ID Discord (réservé au staff/admin/dev).
+- **Utilisation** : `/manage-user-bots user_id:<ID Discord>`
 
-### Additional Commands
+## Ajouter des commandes supplémentaires
 
-You can add more commands by creating new command files in the `commands` directory. Each command file should export a command object with the following structure:
+Vous pouvez ajouter d’autres commandes en créant de nouveaux fichiers `.js` dans le dossier `commands/`.
+
+Chaque fichier doit suivre cette structure :
 
 ```javascript
+const { SlashCommandBuilder } = require('discord.js');
+
 module.exports = {
-    name: 'command-name',
-    description: 'Command description',
-    options: [
-        // Command options
-    ],
-    run: async (interaction, client, config) => {
-        // Command logic
+    data: new SlashCommandBuilder()
+        .setName('nom-de-la-commande')
+        .setDescription('Description de la commande'),
+    
+    async execute(interaction) {
+        await interaction.reply('Réponse de la commande personnalisée.');
     }
 };
+```

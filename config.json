@@ -4,7 +4,7 @@
   "pterodactyl": {
     "url": "xxxxx",
     "apiKey": "xxxxx"
-  },
+    },
   "refreshInterval": 30000,
   "statuses": [
     {
